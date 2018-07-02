@@ -1,4 +1,4 @@
-# Minesweeper - Jave Swing MVC
+# Minesweeper - Java Swing MVC
 An object-oriented clone of the famous Windows game Minesweeper made in Java-Swing Framework following the Model View Controller (MVC) Architecture. Its a stand-alone desktop game which also provides save and load game functionalities. 
 
 The main design focus is the MVC architecture and the decoupled entities. Attention has been given to even minor details in order to make the game look and feel like the original game.  
