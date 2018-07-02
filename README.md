@@ -24,6 +24,6 @@ There is a separate "Executable Game" folder which has the directly executable g
 
 #### Save and Load Game
 <p align="middle">
-  <img src="../master/images/save.png" width="400" />  
+  <img src="../master/images/save.PNG" width="400" />  
   <img src="../master/images/load.png" width="400" /> 
 </p>
