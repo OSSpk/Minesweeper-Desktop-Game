@@ -27,3 +27,14 @@ There is a separate "Executable Game" folder which has the directly executable g
   <img src="../master/images/save.PNG" width="400" />  
   <img src="../master/images/load.png" width="400" /> 
 </p>
+
+
+## Contact
+You can get in touch with me on my LinkedIn Profile: [Haris Muneer](https://www.linkedin.com/in/harismuneer/)
+
+## Issues
+If you face any issue, you can create a new issue in the Issues Tab and I will be glad to help you out.
+
+## License
+[MIT](../master/LICENSE)
+Copyright (c) 2018-present, harismuneer
