@@ -1,5 +1,9 @@
 # 💣 Minesweeper - Java Swing MVC
 
+<p align="center">
+  <img src="../master/images/gameplay.gif"/>
+  </p>
+
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](#)
 [![GitHub Forks](https://img.shields.io/github/forks/harismuneer/Minesweeper-Desktop-Game.svg?style=social&label=Fork&maxAge=2592000)](https://www.github.com/harismuneer/Minesweeper-Desktop-Game/fork)
 [![Build Status](https://semaphoreapp.com/api/v1/projects/d4cca506-99be-44d2-b19e-176f36ec8cf1/128505/badge.svg)](#)
