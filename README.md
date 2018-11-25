@@ -1,14 +1,15 @@
-# 💣 Minesweeper - Java Swing MVC
-
 <p align="center">
-  <img src="../master/images/gameplay.gif"/>
+  <img src="../master/images/gameplay.gif" width=500 height=450/>
   </p>
 
+# 💣 Minesweeper - Java Swing MVC
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](#)
 [![GitHub Forks](https://img.shields.io/github/forks/harismuneer/Minesweeper-Desktop-Game.svg?style=social&label=Fork&maxAge=2592000)](https://www.github.com/harismuneer/Minesweeper-Desktop-Game/fork)
 [![Build Status](https://semaphoreapp.com/api/v1/projects/d4cca506-99be-44d2-b19e-176f36ec8cf1/128505/badge.svg)](#)
 [![GitHub Issues](https://img.shields.io/github/issues/harismuneer/Minesweeper-Desktop-Game.svg?style=flat&label=Issues&maxAge=2592000)](https://www.github.com/harismuneer/Minesweeper-Desktop-Game/issues)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat&label=Contributions&colorA=red&colorB=black	)](#)
+
+
 
 
 An object-oriented clone of the famous Windows game Minesweeper made in Java-Swing Framework following the Model View Controller (MVC) Architecture. Its a stand-alone desktop game which also provides save and load game functionalities. 
