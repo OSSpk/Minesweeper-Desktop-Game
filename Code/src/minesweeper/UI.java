@@ -44,8 +44,12 @@ public class UI extends JFrame {
     private JMenuItem statistics;
     private JMenuItem exit;
 
+    private Theme theme;
+
     // ---------------------------------------------------------------//
     public UI(int r, int c, int m) {
+        theme = new Theme("defaultTheme");
+
         this.rows = r;
         this.cols = c;
 
@@ -96,12 +100,12 @@ public class UI extends JFrame {
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
         timePassedLabel.setBorder(loweredetched);
-        timePassedLabel.setBackground(new Color(110, 110, 255));
-        timePassedLabel.setForeground(Color.white);
+        timePassedLabel.setBackground(theme.getLabelBoxColor());
+        timePassedLabel.setForeground(theme.getLabelFontColor());
         timePassedLabel.setOpaque(true);
 
         JLabel iT = new JLabel("", SwingConstants.CENTER);
-        iT.setIcon(new ImageIcon(getClass().getResource("/resources/clock.png")));
+        iT.setIcon(theme.getClockIcon());
 
         timePassedPanel.add(iT, BorderLayout.WEST);
         timePassedPanel.add(timePassedLabel, BorderLayout.CENTER);
@@ -117,14 +121,14 @@ public class UI extends JFrame {
         this.minesLabel = new JLabel("  0  ", SwingConstants.CENTER);
         minesLabel.setFont(new Font("Serif", Font.BOLD, 20));
         minesLabel.setBorder(loweredetched);
-        minesLabel.setBackground(new Color(110, 110, 255));
-        minesLabel.setForeground(Color.white);
+        minesLabel.setBackground(theme.getLabelBoxColor());
+        minesLabel.setForeground(theme.getLabelFontColor());
 
         minesLabel.setOpaque(true);
         setMines(m);
 
         JLabel mT = new JLabel("", SwingConstants.CENTER);
-        mT.setIcon(new ImageIcon(getClass().getResource("/resources/mine.png")));
+        mT.setIcon(theme.getMineIcon());
 
         minesPanel.add(minesLabel, BorderLayout.WEST);
         minesPanel.add(mT, BorderLayout.CENTER);
@@ -169,7 +173,7 @@ public class UI extends JFrame {
         p.setOpaque(false);
 
         setLayout(new BorderLayout());
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/resources/2.jpg")));
+        JLabel background = new JLabel(theme.getBackgroundIcon());
 
         add(background);
 
@@ -265,7 +269,7 @@ public class UI extends JFrame {
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 buttons[x][y].setText("");
-                buttons[x][y].setBackground(new Color(0, 103, 200));
+                buttons[x][y].setBackground(theme.getTileButtonColor());
                 buttons[x][y].setIcon(tile);
             }
         }
@@ -356,16 +360,16 @@ public class UI extends JFrame {
 
         ImageIcon d;
 
-        d = new ImageIcon(getClass().getResource("/resources/redmine.png"));
+        d = theme.getRedMineIcon();
         redMine = resizeIcon(d, bWidth - bOffset, bHeight - bOffset);
 
-        d = new ImageIcon(getClass().getResource("/resources/mine.png"));
+        d = theme.getMineIcon();
         mine = resizeIcon(d, bWidth - bOffset, bHeight - bOffset);
 
-        d = new ImageIcon(getClass().getResource("/resources/flag.png"));
+        d = theme.getFlagIcon();
         flag = resizeIcon(d, bWidth - bOffset, bHeight - bOffset);
 
-        d = new ImageIcon(getClass().getResource("/resources/tile.png"));
+        d = theme.getTileIcon();
         tile = resizeIcon(d, bWidth - bOffset, bHeight - bOffset);
 
         // -------------------------------------------------------//
@@ -391,21 +395,21 @@ public class UI extends JFrame {
     // ---------------------------------------------------------------------//
     public void setTextColor(JButton b) {
         if (b.getText().equals("1"))
-            b.setForeground(Color.blue);
+            b.setForeground(theme.getNumberColors(0));
         else if (b.getText().equals("2"))
-            b.setForeground(new Color(76, 153, 0));
+            b.setForeground(theme.getNumberColors(1));
         else if (b.getText().equals("3"))
-            b.setForeground(Color.red);
+            b.setForeground(theme.getNumberColors(2));
         else if (b.getText().equals("4"))
-            b.setForeground(new Color(153, 0, 0));
+            b.setForeground(theme.getNumberColors(3));
         else if (b.getText().equals("5"))
-            b.setForeground(new Color(153, 0, 153));
+            b.setForeground(theme.getNumberColors(4));
         else if (b.getText().equals("6"))
-            b.setForeground(new Color(96, 96, 96));
+            b.setForeground(theme.getNumberColors(5));
         else if (b.getText().equals("7"))
-            b.setForeground(new Color(0, 0, 102));
+            b.setForeground(theme.getNumberColors(6));
         else if (b.getText().equals("8"))
-            b.setForeground(new Color(153, 0, 76));
+            b.setForeground(theme.getNumberColors(7));
     }
     // ------------------------------------------------------------------------//
 
