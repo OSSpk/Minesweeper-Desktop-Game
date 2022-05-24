@@ -1,4 +1,5 @@
 .vscode
 "Executable Game"
 nbproject
+Code/build
 Code/build/classes/db.accdb
