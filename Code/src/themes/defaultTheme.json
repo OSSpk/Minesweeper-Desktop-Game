@@ -1,4 +1,5 @@
 {
+	"resourceFolder": "defaultTheme",
 	"numberColors": {
 		"1": [0, 0, 255],
 		"2": [76, 153, 0],

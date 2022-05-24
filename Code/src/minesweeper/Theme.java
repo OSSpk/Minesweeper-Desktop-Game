@@ -25,14 +25,6 @@ public class Theme {
     private Color tileButtonColor;
 
     public Theme(String theme) {
-        backgroundIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/2.jpg"));
-        tileIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/tile.png"));
-        flagIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/flag.png"));
-        mineIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/mine.png"));
-        redMineIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/redmine.png"));
-        clockIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/clock.png"));
-        questionMarkIcon = new ImageIcon(getClass().getResource("/resources/" + theme + "/question.png"));
-
         JSONParser parser = new JSONParser();
         JSONArray jsonArray;
         try {
@@ -57,6 +49,15 @@ public class Theme {
 
             jsonArray = (JSONArray) jsonObject.get("tileButtonColor");
             tileButtonColor = getColorFromJsonArray(jsonArray);
+
+            String themeResource = (String) jsonObject.get("resourceFolder");
+            backgroundIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/2.jpg"));
+            tileIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/tile.png"));
+            flagIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/flag.png"));
+            mineIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/mine.png"));
+            redMineIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/redmine.png"));
+            clockIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/clock.png"));
+            questionMarkIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/question.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
