@@ -40,9 +40,11 @@ public class UI extends JFrame {
 
     private JMenuBar menuBar;
     private JMenu gameMenu;
+    private JMenu optionMenu;
     private JMenuItem newGame;
     private JMenuItem statistics;
     private JMenuItem exit;
+    private JMenuItem appearence;
 
     private Theme theme;
 
@@ -161,7 +163,13 @@ public class UI extends JFrame {
         gameMenu.add(statistics);
         gameMenu.add(exit);
 
+        optionMenu = new JMenu("Option");
+        appearence = new JMenuItem("Appearance");
+        appearence.setName("Appearence");
+        optionMenu.add(appearence);
+
         menuBar.add(gameMenu);
+        menuBar.add(optionMenu);
         // ----------------------------------------------------//
 
         JPanel p = new JPanel();
