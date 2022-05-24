@@ -177,7 +177,6 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         this.playing = false;
 
         board.resetBoard();
-
         gui.interruptTimer();
         gui.resetTimer();
         gui.initGame();
@@ -732,19 +731,22 @@ public class Game implements MouseListener, ActionListener, WindowListener {
                         break;
                 }
             }
-        }
-
-        else if (menuItem.getName().equals("Exit")) {
+        } else if (menuItem.getName().equals("Exit")) {
             windowClosing(null);
-        }
-
-        // Statistics
-        else {
+        } else if (menuItem.getName().equals("Statistics")) {
             showScore();
+        } else if (menuItem.getName().equals("Appearence")) {
+            openAppearenceWindow();
         }
     }
 
     // --------------------------------------------------------------------------//
+
+    // TODO: Create window to set appearance
+    private void openAppearenceWindow() {
+        JDialog dialog = new JDialog();
+
+    }
 
     // Mouse Click Listener
     @Override

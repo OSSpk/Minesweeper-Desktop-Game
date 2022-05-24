@@ -164,7 +164,7 @@ public class UI extends JFrame {
         gameMenu.add(exit);
 
         optionMenu = new JMenu("Option");
-        appearence = new JMenuItem("Appearance");
+        appearence = new JMenuItem("   Appearance");
         appearence.setName("Appearence");
         optionMenu.add(appearence);
 
@@ -303,6 +303,8 @@ public class UI extends JFrame {
         newGame.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         exit.setAccelerator(KeyStroke.getKeyStroke('Q', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         statistics.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+
+        appearence.addActionListener(game);
     }
 
     // -----------------GETTERS AND SETTERS--------------------//
