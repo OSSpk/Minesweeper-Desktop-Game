@@ -9,9 +9,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
+import java.util.Properties;
+
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.sql.Date;
@@ -33,6 +36,9 @@ public class Game implements MouseListener, ActionListener, WindowListener {
 
     private Score score;
 
+    private String themeName;
+    private final Properties configProp = new Properties();
+
     // ------------------------------------------------------------------//
 
     public Game() {
@@ -46,6 +52,15 @@ public class Game implements MouseListener, ActionListener, WindowListener {
             System.out.println("Error loading database file.");
         }
 
+        try {
+            FileReader in = new FileReader(
+                    new File(Game.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath()
+                            + "\\config.properties");
+            configProp.load(in);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         dbPath = "jdbc:ucanaccess://" + p;
 
         score = new Score();
@@ -54,8 +69,8 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         UI.setLook("Nimbus");
 
         createBoard();
-
-        this.gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines());
+        themeName = configProp.getProperty("themeName");
+        this.gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines(), themeName);
         this.gui.setButtonListeners(this);
 
         this.playing = false;

@@ -49,8 +49,8 @@ public class UI extends JFrame {
     private Theme theme;
 
     // ---------------------------------------------------------------//
-    public UI(int r, int c, int m) {
-        theme = new Theme("defaultTheme");
+    public UI(int r, int c, int m, String themeName) {
+        theme = new Theme(themeName);
 
         this.rows = r;
         this.cols = c;

@@ -36,7 +36,9 @@ public class Theme {
         JSONParser parser = new JSONParser();
         JSONArray jsonArray;
         try {
-            FileReader reader = new FileReader(new File(getClass().getResource("/themes/" + theme + ".json").toURI()));
+            FileReader reader = new FileReader(
+                    new File(Theme.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toPath()
+                            + "/themes/" + theme + ".json");
             Object obj = parser.parse(reader);
             JSONObject jsonObject = (JSONObject) obj;
             JSONObject jsonNumberColorsList = (JSONObject) jsonObject.get("numberColors");
