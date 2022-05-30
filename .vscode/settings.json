@@ -1,0 +1,13 @@
+{
+	"java.project.sourcePaths": ["Code/src"],
+	"java.project.outputPath": "Code/build/classes",
+	"java.project.referencedLibraries": ["Code/Libs/*.jar"],
+	"workbench.colorCustomizations": {
+		"editorIndentGuide.activeBackground": "#ff0000",
+		"editorCursor.foreground": "#ff0000",
+		"editorLineNumber.foreground": "#c06464",
+		"activityBar.background": "#342D0C",
+		"titleBar.activeBackground": "#494011",
+		"titleBar.activeForeground": "#FCFAF0"
+	}
+}
