@@ -1,5 +1,33 @@
 {
 	"resourceFolder": "defaultTheme",
+	"background": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/2.jpg" }
+	},
+	"tile": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/tile.png" }
+	},
+	"flag": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/flag.png" }
+	},
+	"mine": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/mine.png" }
+	},
+	"red_mine": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/redmine.png" }
+	},
+	"clock": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/clock.png" }
+	},
+	"question": {
+		"type": "image",
+		"data": { "path": "/resources/defaultTheme/question.png" }
+	},
 	"numberColors": {
 		"1": [0, 0, 255],
 		"2": [76, 153, 0],

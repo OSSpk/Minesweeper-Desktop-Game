@@ -1,11 +1,14 @@
 package minesweeper;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import java.io.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import javax.swing.ImageIcon;
 
 public class Theme {
@@ -50,17 +53,46 @@ public class Theme {
             jsonArray = (JSONArray) jsonObject.get("tileButtonColor");
             tileButtonColor = getColorFromJsonArray(jsonArray);
 
-            String themeResource = (String) jsonObject.get("resourceFolder");
-            backgroundIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/2.jpg"));
-            tileIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/tile.png"));
-            flagIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/flag.png"));
-            mineIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/mine.png"));
-            redMineIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/redmine.png"));
-            clockIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/clock.png"));
-            questionMarkIcon = new ImageIcon(getClass().getResource("/resources/" + themeResource + "/question.png"));
+            JSONObject themeData = (JSONObject) jsonObject.get("background");
+            backgroundIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("tile");
+            tileIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("flag");
+            flagIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("mine");
+            mineIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("red_mine");
+            redMineIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("clock");
+            clockIcon = getImageIconFromJSONObject(themeData);
+
+            themeData = (JSONObject) jsonObject.get("question");
+            questionMarkIcon = getImageIconFromJSONObject(themeData);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private ImageIcon getImageIconFromJSONObject(JSONObject jsonObject) {
+        String themeDataType = (String) jsonObject.get("type");
+        JSONObject data = (JSONObject) jsonObject.get("data");
+        if (themeDataType.equalsIgnoreCase("image")) {
+            return new ImageIcon(getClass().getResource((String) data.get("path")));
+        } else {
+            return createColorIcon(get2DVectorFromJSONArray((JSONArray) data.get("size")),
+                    getColorFromJsonArray((JSONArray) data.get("color")));
+        }
+    }
+
+    private int[] get2DVectorFromJSONArray(JSONArray arr) {
+        int[] v = { Integer.valueOf(arr.get(0).toString()), Integer.valueOf(arr.get(1).toString()) };
+        return v;
     }
 
     private Color getColorFromJsonArray(JSONArray arr) {
@@ -68,6 +100,16 @@ public class Theme {
         int g = Integer.valueOf(arr.get(1).toString());
         int b = Integer.valueOf(arr.get(2).toString());
         return new Color(r, g, b);
+    }
+
+    protected static ImageIcon createColorIcon(int[] size, Color color) {
+        BufferedImage img = new BufferedImage(size[0], size[1], BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = img.createGraphics();
+        g.setColor(color);
+        g.fillRect(0, 0, size[0], size[1]);
+        g.dispose();
+
+        return new ImageIcon(img);
     }
 
     /**
