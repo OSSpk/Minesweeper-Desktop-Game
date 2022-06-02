@@ -402,6 +402,10 @@ public class UI extends JFrame {
         return tile;
     }
 
+    public Theme getTheme() {
+        return theme;
+    }
+
     // ---------------------------------------------------------------------//
     public void setTextColor(JButton b) {
         if (b.getText().equals("1"))

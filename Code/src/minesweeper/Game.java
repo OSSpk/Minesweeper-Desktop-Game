@@ -744,8 +744,59 @@ public class Game implements MouseListener, ActionListener, WindowListener {
 
     // TODO: Create window to set appearance
     private void openAppearenceWindow() {
-        JDialog dialog = new JDialog();
+        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
 
+        TitledBorder settings = BorderFactory.createTitledBorder("Customize Theme");
+        settings.setTitleJustification(TitledBorder.LEFT);
+
+        JPanel upperPanel = new JPanel(new BorderLayout());
+
+        JLabel themePackName = new JLabel("Preset Theme: ");
+        JComboBox<String> presetThemeOption = new JComboBox<String>();
+
+        try {
+            File themePath = new File(getClass().getResource("/themes").toURI());
+            File[] fs = themePath.listFiles();
+            for (File f : fs) {
+                String item = f.getName().replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2").replaceAll("_", " ")
+                        .replaceAll(".json", "");
+                presetThemeOption.addItem(toTitleCase(item));
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+        JPanel settingPanel = new JPanel();
+        settingPanel.setBorder(settings);
+
+        upperPanel.add(themePackName, BorderLayout.WEST);
+        upperPanel.add(presetThemeOption, BorderLayout.CENTER);
+
+        dialog.setLayout(new BorderLayout());
+        dialog.add(upperPanel, BorderLayout.NORTH);
+        dialog.add(settingPanel, BorderLayout.CENTER);
+        dialog.pack();
+        dialog.setTitle("Appearance Settings");
+        dialog.setLocationRelativeTo(gui);
+        dialog.setVisible(true);
+    }
+
+    private static String toTitleCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return "";
+        }
+
+        if (str.length() == 1) {
+            return str.toUpperCase();
+        }
+
+        int i = 0;
+        String[] words = str.split(" ");
+        for (String word : words) {
+            words[i++] = word.substring(0, 1).toUpperCase() + word.substring(1);
+        }
+
+        return String.join(" ", words);
     }
 
     // Mouse Click Listener
