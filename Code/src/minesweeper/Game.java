@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URISyntaxException;
@@ -25,7 +27,7 @@ import javax.swing.border.TitledBorder;
 import minesweeper.Score.Time;
 
 // This is the main controller class
-public class Game implements MouseListener, ActionListener, WindowListener {
+public class Game implements MouseListener, ActionListener, WindowListener, ItemListener {
     public static String dbPath;
     // "playing" indicates whether a game is running (true) or not (false).
     private boolean playing;
@@ -746,31 +748,84 @@ public class Game implements MouseListener, ActionListener, WindowListener {
     private void openAppearenceWindow() {
         JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
 
-        TitledBorder settings = BorderFactory.createTitledBorder("Customize Theme");
-        settings.setTitleJustification(TitledBorder.LEFT);
+        TitledBorder presetBorder = BorderFactory.createTitledBorder("Preset");
+        presetBorder.setTitleJustification(TitledBorder.LEFT);
 
         JPanel upperPanel = new JPanel(new BorderLayout());
+        upperPanel.setBorder(presetBorder);
 
-        JLabel themePackName = new JLabel("Preset Theme: ");
         JComboBox<String> presetThemeOption = new JComboBox<String>();
-
         try {
             File themePath = new File(getClass().getResource("/themes").toURI());
             File[] fs = themePath.listFiles();
             for (File f : fs) {
-                String item = f.getName().replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2").replaceAll("_", " ")
-                        .replaceAll(".json", "");
-                presetThemeOption.addItem(toTitleCase(item));
+                // String item = f.getName().replaceAll("(\\p{Ll})(\\p{Lu})", "$1
+                // $2").replaceAll("_", " ")
+                // .replaceAll(".json", "");
+                // presetThemeOption.addItem(toTitleCase(item));
+                String item = f.getName().replaceFirst(".json", "");
+                presetThemeOption.addItem(item);
             }
         } catch (Exception e) {
             System.err.println(e);
         }
+        presetThemeOption.setPrototypeDisplayValue("This is just a placeholder for theme name");
+        presetThemeOption.setSelectedItem(themeName);
+        presetThemeOption.addItemListener((ItemEvent e) -> {
+            int state = e.getStateChange();
+            if (state == ItemEvent.SELECTED) {
+                // TODO: Change this behaviour to only repaint the board when click Confirm
+                // button
+                // TODO: Need to add Confirm button xD
+                // quick save before switching theme
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        board.saveGame(gui.getTimePassed(), gui.getMines());
+                        return null;
+                    }
 
-        JPanel settingPanel = new JPanel();
-        settingPanel.setBorder(settings);
+                    @Override
+                    protected void done() {
+                        dialog.dispose();
+                    }
+                };
+                worker.execute();
 
-        upperPanel.add(themePackName, BorderLayout.WEST);
+                // destroy the old UI
+                gui.dispose();
+                playing = false;
+
+                // set new theme
+                themeName = presetThemeOption.getSelectedItem().toString();
+                configProp.setProperty("themeName", themeName);
+
+                // create new ui with new theme
+                gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines(), themeName);
+                gui.setButtonListeners(this);
+                gui.setVisible(true);
+                gui.setIcons();
+                gui.hideAll();
+
+                // load board's state
+                Pair p = board.loadSaveGame();
+                // set button's images
+                setButtonImages();
+                // load timer's value
+                gui.setTimePassed((int) p.getKey());
+                // load mines value
+                gui.setMines((int) p.getValue());
+                gui.startTimer();
+
+                playing = true;
+            }
+        });
         upperPanel.add(presetThemeOption, BorderLayout.CENTER);
+
+        TitledBorder settingBorder = BorderFactory.createTitledBorder("Customize Theme");
+        settingBorder.setTitleJustification(TitledBorder.LEFT);
+        JPanel settingPanel = new JPanel();
+        settingPanel.setBorder(settingBorder);
 
         dialog.setLayout(new BorderLayout());
         dialog.add(upperPanel, BorderLayout.NORTH);
@@ -917,5 +972,11 @@ public class Game implements MouseListener, ActionListener, WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        // TODO Auto-generated method stub
+
     }
 }
