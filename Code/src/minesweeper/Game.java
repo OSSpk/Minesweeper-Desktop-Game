@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.swing.border.Border;
@@ -824,8 +825,62 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
         TitledBorder settingBorder = BorderFactory.createTitledBorder("Customize Theme");
         settingBorder.setTitleJustification(TitledBorder.LEFT);
-        JPanel settingPanel = new JPanel();
+        JPanel settingPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         settingPanel.setBorder(settingBorder);
+
+        GridLayout columnLayout = new GridLayout(7, 1, 0, 10);
+        JPanel column1 = new JPanel(columnLayout);
+
+        int[] iconSize = { 32, 32 };
+        JLabel l;
+        HashMap<String, ImageIcon> iconsData = gui.getTheme().getIcons();
+        for (String iconName : iconsData.keySet()) {
+            l = new JLabel(toTitleCase(iconName) + ": ",
+                    UI.resizeIcon(iconsData.get(iconName), iconSize[0], iconSize[1]),
+                    JLabel.RIGHT);
+            l.setHorizontalTextPosition(JLabel.LEFT);
+            column1.add(l);
+        }
+
+        JPanel column2 = new JPanel(columnLayout);
+
+        ImageIcon img = Theme.createColorIcon(iconSize, gui.getTheme().getLabelBoxColor());
+        l = new JLabel("Counter Box: ", img, JLabel.RIGHT);
+        l.setHorizontalTextPosition(JLabel.LEFT);
+        column2.add(l);
+
+        img = Theme.createColorIcon(iconSize, gui.getTheme().getLabelFontColor());
+        l = new JLabel("Counter Font: ", img, JLabel.RIGHT);
+        l.setHorizontalTextPosition(JLabel.LEFT);
+        column2.add(l);
+
+        img = Theme.createColorIcon(iconSize, gui.getTheme().getTileBorderColor());
+        l = new JLabel("Tile Border: ", img, JLabel.RIGHT);
+        l.setHorizontalTextPosition(JLabel.LEFT);
+        column2.add(l);
+
+        img = Theme.createColorIcon(iconSize, gui.getTheme().getTileButtonColor());
+        l = new JLabel("Tile Button: ", img, JLabel.RIGHT);
+        l.setHorizontalTextPosition(JLabel.LEFT);
+        column2.add(l);
+
+        JPanel numberColorsPanel = new JPanel();
+        Color[] numbersColor = gui.getTheme().getNumberColors();
+        for (int num = 0; num < numbersColor.length; num++) {
+            ImageIcon i = Theme.createColorIcon(iconSize, Color.LIGHT_GRAY);
+            l = new JLabel((num + 1) + "", i, JLabel.RIGHT);
+            l.setHorizontalTextPosition(JLabel.CENTER);
+            l.setFont(new Font("Serif", Font.BOLD, 24));
+            l.setForeground(numbersColor[num]);
+            if (num % 4 == 0) {
+                numberColorsPanel = new JPanel();
+                column2.add(numberColorsPanel);
+            }
+            numberColorsPanel.add(l);
+        }
+
+        settingPanel.add(column1);
+        settingPanel.add(column2);
 
         dialog.setLayout(new BorderLayout());
         dialog.add(upperPanel, BorderLayout.NORTH);

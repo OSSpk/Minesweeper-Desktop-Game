@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.io.*;
+import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,22 +13,17 @@ import org.json.simple.parser.JSONParser;
 import javax.swing.ImageIcon;
 
 public class Theme {
-    private ImageIcon backgroundIcon;
-    private ImageIcon tileIcon;
-    private ImageIcon flagIcon;
-    private ImageIcon mineIcon;
-    private ImageIcon redMineIcon;
-    private ImageIcon clockIcon;
-    private ImageIcon questionMarkIcon;
+    private HashMap<String, ImageIcon> icons;
 
     private Color[] numberColors = new Color[8];
+
     private Color labelBoxColor;
     private Color labelFontColor;
-
     private Color tileBorderColor;
     private Color tileButtonColor;
 
     public Theme(String theme) {
+        icons = new HashMap<String, ImageIcon>();
         JSONParser parser = new JSONParser();
         JSONArray jsonArray;
         try {
@@ -53,29 +49,16 @@ public class Theme {
             jsonArray = (JSONArray) jsonObject.get("tileButtonColor");
             tileButtonColor = getColorFromJsonArray(jsonArray);
 
-            JSONObject themeData = (JSONObject) jsonObject.get("background");
-            backgroundIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("tile");
-            tileIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("flag");
-            flagIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("mine");
-            mineIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("red_mine");
-            redMineIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("clock");
-            clockIcon = getImageIconFromJSONObject(themeData);
-
-            themeData = (JSONObject) jsonObject.get("question");
-            questionMarkIcon = getImageIconFromJSONObject(themeData);
+            JSONObject themeData;
+            String[] keys = { "background", "tile", "flag", "mine", "red_mine", "clock", "question" };
+            for (String key : keys) {
+                themeData = (JSONObject) jsonObject.get(key);
+                icons.put(key, getImageIconFromJSONObject(themeData));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Error Location: Reading Theme File");
         }
     }
 
@@ -112,53 +95,61 @@ public class Theme {
         return new ImageIcon(img);
     }
 
+    public HashMap<String, ImageIcon> getIcons() {
+        return icons;
+    }
+
+    public ImageIcon getIcon(String iconName) {
+        return icons.get(iconName);
+    }
+
     /**
      * @return ImageIcon return the backgroundIcon
      */
     public ImageIcon getBackgroundIcon() {
-        return backgroundIcon;
+        return icons.get("background");
     }
 
     /**
      * @return ImageIcon return the tile
      */
     public ImageIcon getTileIcon() {
-        return tileIcon;
+        return icons.get("tile");
     }
 
     /**
      * @return ImageIcon return the flag
      */
     public ImageIcon getFlagIcon() {
-        return flagIcon;
+        return icons.get("flag");
     }
 
     /**
      * @return ImageIcon return the mine
      */
     public ImageIcon getMineIcon() {
-        return mineIcon;
+        return icons.get("mine");
     }
 
     /**
      * @return ImageIcon return the redMine
      */
     public ImageIcon getRedMineIcon() {
-        return redMineIcon;
+        return icons.get("red_mine");
     }
 
     /**
      * @return ImageIcon return the clock
      */
     public ImageIcon getClockIcon() {
-        return clockIcon;
+        return icons.get("clock");
     }
 
     /**
      * @return ImageIcon return the questionMark
      */
     public ImageIcon getQuestionMarkIcon() {
-        return questionMarkIcon;
+        return icons.get("question");
     }
 
     /**

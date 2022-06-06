@@ -355,7 +355,7 @@ public class UI extends JFrame {
     }
 
     // --------------------Related to Icons----------------------------//
-    private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+    protected static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
         Image img = icon.getImage();
         Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
