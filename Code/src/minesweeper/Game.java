@@ -198,6 +198,30 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
         score.save();
     }
 
+    private void refreshGameUI() {
+        playing = false;
+        int timePassed= gui.getTimePassed();
+        int mine = gui.getMines();
+
+        // destroy the old UI
+        gui.dispose();
+
+        // create new ui with new theme
+        gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines(), themeName);
+        gui.setButtonListeners(this);
+        gui.setVisible(true);
+        gui.setIcons();
+        gui.hideAll();
+
+        // set button's images
+        setButtonImages();
+        // load timer's value
+        gui.setTimePassed(timePassed);
+        // load mines value
+        gui.setMines(mine);
+
+    }
+
     // -------------------------GAME WON AND GAME LOST
     // ---------------------------------//
 
@@ -785,47 +809,12 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
                 // TODO: Change this behaviour to only repaint the board when click Confirm
                 // button
                 // TODO: Need to add Confirm button xD
-                // quick save before switching theme
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        board.saveGame(gui.getTimePassed(), gui.getMines());
-                        return null;
-                    }
-
-                    @Override
-                    protected void done() {
-                        dialog.dispose();
-                    }
-                };
-                worker.execute();
-
-                // destroy the old UI
-                gui.dispose();
-                playing = false;
 
                 // set new theme
                 themeName = presetThemeOption.getSelectedItem().toString();
                 configProp.setProperty("themeName", themeName);
 
-                // create new ui with new theme
-                gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines(), themeName);
-                gui.setButtonListeners(this);
-                gui.setVisible(true);
-                gui.setIcons();
-                gui.hideAll();
-
-                // load board's state
-                Pair p = board.loadSaveGame();
-                // set button's images
-                setButtonImages();
-                // load timer's value
-                gui.setTimePassed((int) p.getKey());
-                // load mines value
-                gui.setMines((int) p.getValue());
-                gui.startTimer();
-
-                playing = true;
+                refreshGameUI();
             }
         });
         upperPanel.add(presetThemeOption, BorderLayout.CENTER);
