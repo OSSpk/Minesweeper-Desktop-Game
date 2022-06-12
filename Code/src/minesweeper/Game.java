@@ -25,6 +25,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.swing.border.TitledBorder;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import minesweeper.Score.Time;
 
 // This is the main controller class
@@ -760,12 +764,15 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
             File themePath = new File(getClass().getResource("/themes").toURI());
             File[] fs = themePath.listFiles();
             for (File f : fs) {
-                // String item = f.getName().replaceAll("(\\p{Ll})(\\p{Lu})", "$1
-                // $2").replaceAll("_", " ")
-                // .replaceAll(".json", "");
-                // presetThemeOption.addItem(toTitleCase(item));
-                String item = f.getName().replaceFirst(".json", "");
-                presetThemeOption.addItem(item);
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(new FileReader(f));
+                JSONObject jsonObject = (JSONObject) obj;
+                String fileType = (String) jsonObject.get("dataType");
+                if (fileType.equals("theme_preset")) {
+
+                    String item = f.getName().replaceFirst(".json", "");
+                    presetThemeOption.addItem(item);
+                }
             }
         } catch (Exception e) {
             System.err.println(e);
@@ -891,7 +898,7 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
         dialog.setVisible(true);
     }
 
-    private static String toTitleCase(String str) {
+    protected static String toTitleCase(String str) {
         if (str == null || str.isEmpty()) {
             return "";
         }
@@ -1031,7 +1038,6 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        // TODO Auto-generated method stub
 
     }
 }

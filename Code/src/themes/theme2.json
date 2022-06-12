@@ -1,5 +1,5 @@
 {
-	"resourceFolder": "defaultTheme",
+	"dataType": "theme_preset",
 	"background": {
 		"type": "color",
 		"data": { "size": [1920, 1280], "color": [255, 0, 150] }
@@ -16,7 +16,7 @@
 		"type": "image",
 		"data": { "path": "/resources/defaultTheme/mine.png" }
 	},
-	"red_mine": {
+	"redMine": {
 		"type": "image",
 		"data": { "path": "/resources/defaultTheme/redmine.png" }
 	},

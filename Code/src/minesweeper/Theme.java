@@ -50,7 +50,7 @@ public class Theme {
             tileButtonColor = getColorFromJsonArray(jsonArray);
 
             JSONObject themeData;
-            String[] keys = { "background", "tile", "flag", "mine", "red_mine", "clock", "question" };
+            String[] keys = { "background", "tile", "flag", "mine", "redMine", "clock", "question" };
             for (String key : keys) {
                 themeData = (JSONObject) jsonObject.get(key);
                 icons.put(key, getImageIconFromJSONObject(themeData));
@@ -135,7 +135,7 @@ public class Theme {
      * @return ImageIcon return the redMine
      */
     public ImageIcon getRedMineIcon() {
-        return icons.get("red_mine");
+        return icons.get("redMine");
     }
 
     /**
