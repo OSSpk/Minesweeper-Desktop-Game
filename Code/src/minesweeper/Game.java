@@ -44,6 +44,7 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
     private Score score;
 
     private String themeName;
+
     private final Properties configProp = new Properties();
 
     // ------------------------------------------------------------------//
@@ -79,7 +80,6 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
         themeName = configProp.getProperty("themeName");
         this.gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines(), themeName);
         this.gui.setButtonListeners(this);
-
         this.playing = false;
 
         gui.setVisible(true);
@@ -200,7 +200,7 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
     private void refreshGameUI() {
         playing = false;
-        int timePassed= gui.getTimePassed();
+        int timePassed = gui.getTimePassed();
         int mine = gui.getMines();
 
         // destroy the old UI
@@ -773,7 +773,6 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
     // --------------------------------------------------------------------------//
 
-    // TODO: Create window to set appearance
     private void openAppearenceWindow() {
         JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
 
@@ -782,6 +781,8 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
         JPanel upperPanel = new JPanel(new BorderLayout());
         upperPanel.setBorder(presetBorder);
+
+        // --------------------- Crete Combo Box --------------------- //
 
         JComboBox<String> presetThemeOption = new JComboBox<String>();
         try {
@@ -801,35 +802,72 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
         } catch (Exception e) {
             System.err.println(e);
         }
+
+        String oldThemeName = themeName;
         presetThemeOption.setPrototypeDisplayValue("This is just a placeholder for theme name");
         presetThemeOption.setSelectedItem(themeName);
         presetThemeOption.addItemListener((ItemEvent e) -> {
             int state = e.getStateChange();
             if (state == ItemEvent.SELECTED) {
-                // TODO: Change this behaviour to only repaint the board when click Confirm
-                // button
-                // TODO: Need to add Confirm button xD
-
                 // set new theme
                 themeName = presetThemeOption.getSelectedItem().toString();
-                configProp.setProperty("themeName", themeName);
 
-                refreshGameUI();
+                // repaint the setting panel
+                dialog.getContentPane().remove(2);
+                dialog.add(createSettingPanel(), BorderLayout.CENTER);
+                dialog.repaint();
+                dialog.revalidate();
             }
         });
         upperPanel.add(presetThemeOption, BorderLayout.CENTER);
+        // --------------------------------------------------- //
 
+        JPanel buttonPanel = new JPanel();
+
+        JButton confirmButton = new JButton("Confirm");
+        JButton cancelButton = new JButton("Cancel");
+
+        confirmButton.addActionListener((ActionEvent e) -> {
+            configProp.setProperty("themeName", themeName);
+            refreshGameUI();
+        });
+        cancelButton.addActionListener((ActionEvent e) -> {
+            System.out.println(oldThemeName);
+            themeName = oldThemeName;
+            configProp.setProperty("themeName", oldThemeName);
+            dialog.dispose();
+        });
+
+        buttonPanel.add(confirmButton);
+        buttonPanel.add(cancelButton);
+        // ------------------------------------------------- //
+
+        dialog.setLayout(new BorderLayout());
+        dialog.add(upperPanel, BorderLayout.NORTH);
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        dialog.add(createSettingPanel(), BorderLayout.CENTER);
+        dialog.pack();
+        dialog.setTitle("Appearance Settings");
+        dialog.setLocationRelativeTo(gui);
+        dialog.setVisible(true);
+    }
+
+    private JPanel createSettingPanel() {
+        Theme tempTheme = new Theme(themeName);
         TitledBorder settingBorder = BorderFactory.createTitledBorder("Customize Theme");
         settingBorder.setTitleJustification(TitledBorder.LEFT);
-        JPanel settingPanel = new JPanel(new GridLayout(1, 2, 15, 0));
-        settingPanel.setBorder(settingBorder);
+
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 15, 0));
+        bottomPanel.setBorder(settingBorder);
+
+        // ---------- Initiate Bottom Panel Elements ------------ //
 
         GridLayout columnLayout = new GridLayout(7, 1, 0, 10);
         JPanel column1 = new JPanel(columnLayout);
 
         int[] iconSize = { 32, 32 };
         JLabel l;
-        HashMap<String, ImageIcon> iconsData = gui.getTheme().getIcons();
+        HashMap<String, ImageIcon> iconsData = tempTheme.getIcons();
         for (String iconName : iconsData.keySet()) {
             l = new JLabel(toTitleCase(iconName) + ": ",
                     UI.resizeIcon(iconsData.get(iconName), iconSize[0], iconSize[1]),
@@ -840,28 +878,28 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
 
         JPanel column2 = new JPanel(columnLayout);
 
-        ImageIcon img = Theme.createColorIcon(iconSize, gui.getTheme().getLabelBoxColor());
+        ImageIcon img = Theme.createColorIcon(iconSize, tempTheme.getLabelBoxColor());
         l = new JLabel("Counter Box: ", img, JLabel.RIGHT);
         l.setHorizontalTextPosition(JLabel.LEFT);
         column2.add(l);
 
-        img = Theme.createColorIcon(iconSize, gui.getTheme().getLabelFontColor());
+        img = Theme.createColorIcon(iconSize, tempTheme.getLabelFontColor());
         l = new JLabel("Counter Font: ", img, JLabel.RIGHT);
         l.setHorizontalTextPosition(JLabel.LEFT);
         column2.add(l);
 
-        img = Theme.createColorIcon(iconSize, gui.getTheme().getTileBorderColor());
+        img = Theme.createColorIcon(iconSize, tempTheme.getTileBorderColor());
         l = new JLabel("Tile Border: ", img, JLabel.RIGHT);
         l.setHorizontalTextPosition(JLabel.LEFT);
         column2.add(l);
 
-        img = Theme.createColorIcon(iconSize, gui.getTheme().getTileButtonColor());
+        img = Theme.createColorIcon(iconSize, tempTheme.getTileButtonColor());
         l = new JLabel("Tile Button: ", img, JLabel.RIGHT);
         l.setHorizontalTextPosition(JLabel.LEFT);
         column2.add(l);
 
         JPanel numberColorsPanel = new JPanel();
-        Color[] numbersColor = gui.getTheme().getNumberColors();
+        Color[] numbersColor = tempTheme.getNumberColors();
         for (int num = 0; num < numbersColor.length; num++) {
             ImageIcon i = Theme.createColorIcon(iconSize, Color.LIGHT_GRAY);
             l = new JLabel((num + 1) + "", i, JLabel.RIGHT);
@@ -875,16 +913,10 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
             numberColorsPanel.add(l);
         }
 
-        settingPanel.add(column1);
-        settingPanel.add(column2);
-
-        dialog.setLayout(new BorderLayout());
-        dialog.add(upperPanel, BorderLayout.NORTH);
-        dialog.add(settingPanel, BorderLayout.CENTER);
-        dialog.pack();
-        dialog.setTitle("Appearance Settings");
-        dialog.setLocationRelativeTo(gui);
-        dialog.setVisible(true);
+        bottomPanel.add(column1);
+        bottomPanel.add(column2);
+        bottomPanel.setName("settingPanel");
+        return bottomPanel;
     }
 
     protected static String toTitleCase(String str) {
