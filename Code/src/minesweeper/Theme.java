@@ -22,6 +22,21 @@ public class Theme {
     private Color tileBorderColor;
     private Color tileButtonColor;
 
+    /*
+     * Default constructor where the theme will be initialized using defaultTheme
+     * preset.
+     */
+    public Theme() {
+        this("defaultTheme");
+    }
+
+    /*
+     * Create a Theme object from given theme preset name. This theme preset must
+     * exist inside resources/themes folder and must be a json file.
+     * <themeName>.json.
+     * 
+     * @param String theme is a filename without the extension .json
+     */
     public Theme(String theme) {
         icons = new HashMap<String, ImageIcon>();
         JSONParser parser = new JSONParser();
