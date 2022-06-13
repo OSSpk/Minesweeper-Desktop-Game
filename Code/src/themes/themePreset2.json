@@ -1,24 +1,24 @@
 {
 	"dataType": "theme_preset",
 	"background": {
-		"type": "color",
-		"data": { "size": [1920, 1280], "color": [255, 0, 150] }
+		"type": "image",
+		"data": { "path": "/resources/themePreset2/spiral_pink.png" }
 	},
 	"tile": {
 		"type": "image",
-		"data": { "path": "/resources/defaultTheme/tile.png" }
+		"data": { "path": "/resources/themePreset2/tile_02.png" }
 	},
 	"flag": {
 		"type": "image",
-		"data": { "path": "/resources/defaultTheme/flag.png" }
+		"data": { "path": "/resources/themePreset2/flag_mine_01.png" }
 	},
 	"mine": {
 		"type": "image",
-		"data": { "path": "/resources/defaultTheme/mine.png" }
+		"data": { "path": "/resources/themePreset2/face_angry.png" }
 	},
 	"redMine": {
 		"type": "image",
-		"data": { "path": "/resources/defaultTheme/redmine.png" }
+		"data": { "path": "/resources/themePreset2/face_evil.png" }
 	},
 	"clock": {
 		"type": "image",
@@ -41,5 +41,5 @@
 	"labelBoxColor": [110, 110, 255],
 	"labelFontColor": [255, 255, 255],
 	"tileBorderColor": [0, 0, 0],
-	"tileButtonColor": [255, 103, 200]
+	"tileButtonColor": [84, 100, 100]
 }
