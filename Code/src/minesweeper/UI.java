@@ -107,7 +107,7 @@ public class UI extends JFrame {
         timePassedLabel.setOpaque(true);
 
         JLabel iT = new JLabel("", SwingConstants.CENTER);
-        iT.setIcon(theme.getClockIcon());
+        iT.setIcon(resizeIcon(theme.getClockIcon(), 48, 48));
 
         timePassedPanel.add(iT, BorderLayout.WEST);
         timePassedPanel.add(timePassedLabel, BorderLayout.CENTER);
@@ -130,7 +130,7 @@ public class UI extends JFrame {
         setMines(m);
 
         JLabel mT = new JLabel("", SwingConstants.CENTER);
-        mT.setIcon(theme.getMineIcon());
+        mT.setIcon(resizeIcon(theme.getMineIcon(), 48, 48));
 
         minesPanel.add(minesLabel, BorderLayout.WEST);
         minesPanel.add(mT, BorderLayout.CENTER);
