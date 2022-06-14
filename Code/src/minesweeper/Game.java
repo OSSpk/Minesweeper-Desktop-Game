@@ -813,8 +813,6 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
                 themeName = presetThemeOption.getSelectedItem().toString();
 
                 // repaint the setting panel
-                // dialog.getContentPane().remove(2);
-                Component toRemove = null;
                 Component[] components = dialog.getContentPane().getComponents();
                 for (Component c : components) {
                     if (c.getName() == null) {
@@ -824,7 +822,6 @@ public class Game implements MouseListener, ActionListener, WindowListener, Item
                     }
 
                 }
-                // dialog.remove(toRemove);
                 dialog.add(createSettingPanel(), BorderLayout.CENTER);
                 dialog.repaint();
                 dialog.revalidate();
