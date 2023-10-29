@@ -449,21 +449,21 @@ public class UI extends JFrame
     //---------------------------------------------------------------------//
     public void setTextColor(JButton b)
     {
-        if (b.getText().equals("1"))
+        if ("1".equals(b.getText()))
             b.setForeground(Color.blue);
-        else if (b.getText().equals("2"))
+        else if ("2".equals(b.getText()))
             b.setForeground(new Color(76,153,0));
-        else if (b.getText().equals("3"))
+        else if ("3".equals(b.getText()))
             b.setForeground(Color.red);
-        else if (b.getText().equals("4"))
+        else if ("4".equals(b.getText()))
             b.setForeground(new Color(153,0,0));
-        else if (b.getText().equals("5"))
+        else if ("5".equals(b.getText()))
             b.setForeground(new Color(153,0,153));
-        else if (b.getText().equals("6"))
+        else if ("6".equals(b.getText()))
             b.setForeground(new Color(96,96,96));
-        else if (b.getText().equals("7"))
+        else if ("7".equals(b.getText()))
             b.setForeground(new Color(0,0,102));
-        else if (b.getText().equals("8"))
+        else if ("8".equals(b.getText()))
             b.setForeground(new Color(153,0,76));        
     }
     //------------------------------------------------------------------------//

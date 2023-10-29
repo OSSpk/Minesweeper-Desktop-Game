@@ -547,7 +547,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 cellSolution = cells[x][y].getContent();
 
                 // Is the cell still unrevealed
-                if( cellSolution.equals("") ) 
+                if( "".equals(cellSolution) ) 
                 {
                     buttons[x][y].setIcon(null);
                     
@@ -565,7 +565,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                     }
                     else
                     {
-                        if(cellSolution.equals("0"))
+                        if("0".equals(cellSolution))
                         {
                             buttons[x][y].setText("");                           
                             buttons[x][y].setBackground(Color.lightGray);
@@ -580,7 +580,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 }
 
                 // This cell is already flagged!
-                else if( cellSolution.equals("F") ) 
+                else if( "F".equals(cellSolution) ) 
                 {
                     // Is it correctly flagged?
                     if(!cells[x][y].getMine()) 
@@ -770,7 +770,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     public void actionPerformed(ActionEvent e) {        
         JMenuItem menuItem = (JMenuItem) e.getSource();
 
-        if (menuItem.getName().equals("New Game"))
+        if ("New Game".equals(menuItem.getName()))
         {
             if (playing)
             {
@@ -802,7 +802,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
             }
         }
         
-        else if (menuItem.getName().equals("Exit"))
+        else if ("Exit".equals(menuItem.getName()))
         {
             windowClosing(null);
         }
