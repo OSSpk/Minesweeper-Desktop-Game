@@ -621,7 +621,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 cellSolution = Integer.toString(cells[x][y].getSurroundingMines());
                 
                 if(cells[x][y].getMine()) 
-                    cellSolution = "F";
+                    cellSolution = "";
 
                 // Compare the player's "answer" to the solution.
                 if(!cells[x][y].getContent().equals(cellSolution))
